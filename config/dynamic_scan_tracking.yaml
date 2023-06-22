@@ -1,0 +1,39 @@
+# drone detection from range image
+drone_detection_enabled: false
+
+# position straight trajectory
+initial_position_x: 10.52325
+initial_position_y: -1.3305
+initial_position_z: -0.3341
+
+# position circular trajectory
+# initial_position_x: 7.8519
+# initial_position_y: 1.46506
+# initial_position_z: 0.56868
+
+# position calibration
+# initial_position_x: 13.4228
+# initial_position_y: 0.86042
+# initial_position_z: 0.57592
+
+search_radius: 0.2
+
+gamma: 0.000000005 ## normalization constant used for point clouds weighted sum
+
+sigma_p44: 50
+sigma_p55: 50
+sigma_p66: 5
+
+sigma_lidar_x: 0.1
+sigma_lidar_y: 0.1
+sigma_lidar_z: 0.1
+
+# Process noise
+# (react fast on changes = high process noise. smooth estimations = low process noise)
+std_a_: 0.01
+std_yawdd_: 0.01
+
+# Measurement noise
+std_laspx_: 0.1
+std_laspy_: 0.1
+std_laspz_: 0.1

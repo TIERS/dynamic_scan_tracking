@@ -1,0 +1,6 @@
+<launch>
+    <node pkg="dynamic_scan_tracking" name="dynamic_scan_tracking_node" type="dynamic_scan_tracking_node" respawn="true" output="screen" ns="dynamic_scan_tracking_node">
+        <rosparam file="$(find dynamic_scan_tracking)/config/dynamic_scan_tracking.yaml" command="load"/>
+    </node>
+    <node pkg="dynamic_scan_tracking" type="livox_to_img.py" name="livox_to_img_node" output="screen"/>
+</launch>
