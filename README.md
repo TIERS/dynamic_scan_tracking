@@ -1,7 +1,7 @@
 # UAV Tracking with Solid-State Lidars: Dynamic Multi-Frequency Scan Integration
 
 <div align="center">
-<img src="doc/pipeline.png" width=99% />
+<img src="doc/pipeline_diagram.png" width=99% />
 </div>
 
 This is the code implementation for the paper [UAV Tracking with Solid-State Lidars: Dynamic Multi-Frequency Scan Integration](https://arxiv.org/abs/2304.12125).
