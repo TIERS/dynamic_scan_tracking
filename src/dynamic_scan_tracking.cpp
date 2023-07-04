@@ -48,6 +48,7 @@ class DynamicScanTrackingNode
         // Define Publishers
         ros::Publisher pub_object_pose; // Final pose from intersection AST and ADT
         ros::Publisher pub_object_velocity;
+        // ros::Publisher pub_target_pcl;
         
         // Define vector used to transform livox custom msg into PointCloud2
         std::vector<livox_ros_driver::CustomMsgConstPtr> livox_data;
@@ -91,7 +92,6 @@ class DynamicScanTrackingNode
         pcl::PointCloud<PointType>::Ptr point_cloud_ast;
         pcl::PointCloud<PointType>::Ptr point_cloud_adt;
 
-        pcl::PointCloud<PointType>::Ptr obj_cloud_current_scan; // point cloud containing only current scan data
         pcl::PointCloud<PointType>::Ptr obj_cloud_ast;
         pcl::PointCloud<PointType>::Ptr obj_cloud_adt;
 
@@ -146,6 +146,7 @@ class DynamicScanTrackingNode
             // Publishers for poses calculated for different integration times
             pub_object_pose = nh.advertise<geometry_msgs::PoseStamped>("/dynamic_scan_tracking/object_pose", 1000);
             pub_object_velocity = nh.advertise<geometry_msgs::TwistStamped>("/dynamic_scan_tracking/object_velocity", 1000);
+            // pub_target_pcl = nh.advertise<sensor_msgs::PointCloud2>("/target_pcl", 1000); // used to visualize current livox point cloud scan
 
             // Initialize position and drone detection to false (changed later according to parameters)
             position_initialized = false;
@@ -162,18 +163,23 @@ class DynamicScanTrackingNode
                 drone_detection_enabled = false;
             }
 
-            // Initialize object position to initial position
-            if(!pnh.getParam("initial_position_x", obj_position.x)
-               || !pnh.getParam("initial_position_y", obj_position.y) 
-               || !pnh.getParam("initial_position_z", obj_position.z)){
+            // If drone detection is not enabled, initialize object position from yaml config file
+            if(!drone_detection_enabled)
+            {
+                if(!pnh.getParam("initial_position_x", obj_position.x)
+                    || !pnh.getParam("initial_position_y", obj_position.y) 
+                    || !pnh.getParam("initial_position_z", obj_position.z))
+                {
                     obj_position.x = 0.0;
                     obj_position.y = 0.0;
                     obj_position.z = 0.0;
+                }
+                else
+                {
+                    position_initialized = true; // initial position defined from yaml config file
+                }
             }
-            else
-            {
-                position_initialized = true;
-            }
+            
 
             if(!pnh.getParam("gamma", gamma))
             {
@@ -200,7 +206,6 @@ class DynamicScanTrackingNode
 
             // Initialize point cloud objects
             point_cloud_current_scan.reset(new pcl::PointCloud<PointType>()); //full point cloud of current scan
-            obj_cloud_current_scan.reset(new pcl::PointCloud<PointType>()); // object point cloud extracted from current scan
             obj_cloud_ast.reset(new pcl::PointCloud<PointType>());
             obj_cloud_adt.reset(new pcl::PointCloud<PointType>());
             point_cloud_ast.reset(new pcl::PointCloud<PointType>());
@@ -249,6 +254,15 @@ class DynamicScanTrackingNode
             ROS_INFO_STREAM("Initial position = " << obj_position);
         }
 
+    // void publishPointCloud(pcl::PointCloud<PointType>::Ptr& pcl_ptr, ros::Publisher& publisher)
+    // {
+    //     sensor_msgs::PointCloud2 pcl_ros_msg;
+    //     pcl::toROSMsg(*pcl_ptr.get(), pcl_ros_msg);
+    //     pcl_ros_msg.header.frame_id = "livox_frame";
+    //     pcl_ros_msg.header.stamp = ros::Time::now();
+    //     publisher.publish(pcl_ros_msg);
+    // }
+
     void droneDetectionCallback(const geometry_msgs::PoseStamped initial_position)
     {
         if(!position_initialized && drone_detection_enabled)
@@ -275,6 +289,8 @@ class DynamicScanTrackingNode
             // Retrieve timestamp in nanoseconds from livox data
             // Used in compute pose to define each point's weight
             unsigned long msg_timebase_ns = livox_data[0]->timebase;
+
+            // publishPointCloud(obj_cloud_ast, pub_target_pcl);
 
             trackObjectAdaptiveIntegrationTime(point_cloud_ast, point_cloud_current_scan, obj_cloud_ast, deque_ast, future_position_ast,
                                             kf_ast, search_radius, msg_timebase_ns, MAX_INTEGRATION_TIME_AST, optimal_integration_time_ast,

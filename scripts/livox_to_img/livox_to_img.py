@@ -1,5 +1,30 @@
 #!/usr/bin/env python
 
+##############################################################################
+#
+#  @file livox_to_img.py
+#  @brief Executable ROS node for livox point cloud to image conversion
+#
+#  Copyright (C) 2023-07-04 18:06:54.
+#  Author: Ha Sier
+#  Email: sierha@utu.fi
+#  All rights reserved.
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+##############################################################################
+
 import rospy
 
 import cv2
@@ -14,7 +39,7 @@ from geometry_msgs.msg import PoseStamped
 
 from cv_bridge import CvBridge
 
-from livox_functions import *
+from livox_to_img.livox_functions import *
 
 
 ####################################################################################
@@ -29,11 +54,12 @@ from livox_functions import *
 
 
 
-class LidarToImage:
+class LidarToImageNode:
+
     def __init__(self):
         rospy.init_node('lidar_to_image_node')
         self.bridge = CvBridge()
-        self.lidar_sub = rospy.Subscriber('/livox/lidar_pc2', PointCloud2, self.point_cloud_callback)
+        self.lidar_sub = rospy.Subscriber('/livox/points', PointCloud2, self.point_cloud_callback)
         self.image_pub = rospy.Publisher('/lidar_image', Image, queue_size=1)
         self.init_pub = rospy.Publisher('/init_position', PoseStamped, queue_size=1)
 
@@ -77,7 +103,7 @@ class LidarToImage:
                 index = get_index(categories_re)[0]
                 x1,y1,x2,y2 = get_box(boxes_re,index)
                 print('-------------------------------------------------------------------------------------')
-                # cv2.rectangle(image, (x1,y2),(x2,y1), (0, 255, 0), 2, 4)
+                cv2.rectangle(image, (x1,y2),(x2,y1), (0, 255, 0), 2, 4)
                 x1,y1 = get_ori_box(x1,y1)
                 x2,y2 = get_ori_box(x2,y2)
 
@@ -96,11 +122,11 @@ class LidarToImage:
             # Publish the image
             image_msg = self.bridge.cv2_to_imgmsg(image, encoding="mono8")
             self.image_pub.publish(image_msg)
+    
 
-
-if __name__ == '__main__':
+def main():
     try:
-        node = LidarToImage()
+        LidarToImageNode()
         rospy.spin()
     except rospy.ROSInterruptException:
         pass
