@@ -1,6 +1,8 @@
 # UAV Tracking with Solid-State Lidars: Dynamic Multi-Frequency Scan Integration
 
-[System Pipeline](doc/pipeline_diagram.pdf)
+<div align="center">
+<img src="doc/pipeline.png" width=99% />
+</div>
 
 This is the code implementation for the paper [UAV Tracking with Solid-State Lidars: Dynamic Multi-Frequency Scan Integration](https://arxiv.org/abs/2304.12125).
 
@@ -16,7 +18,7 @@ The code has been tested on Ubuntu 20.04 with ROS Noetic
 
 - Livox_ros_driver, Follow [livox_ros_driver Installation](https://github.com/Livox-SDK/livox_ros_driver).
 
-The drone detection requires the point cloud to be in PointCloud2 format. For the conversion use [this](https://github.com/koide3/livox_to_pointcloud2) repository and follow the instructions. If you use a different repository, change the value for the ```self.lidar_sub``` variable in the ```livox_to_img.py``` file accordingly.
+The drone detection requires the point cloud to be in PointCloud2 format while the tracking uses the Livox CustomMsg data type. For the conversion use [this](https://github.com/koide3/livox_to_pointcloud2) repository and follow the instructions. If you use a different repository, change the value for the ```self.lidar_sub``` variable in the ```livox_to_img.py``` file accordingly.
 
 ### Build
 ```
