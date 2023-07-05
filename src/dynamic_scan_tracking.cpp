@@ -48,7 +48,7 @@ class DynamicScanTrackingNode
         // Define Publishers
         ros::Publisher pub_object_pose; // Final pose from intersection AST and ADT
         ros::Publisher pub_object_velocity;
-        // ros::Publisher pub_target_pcl;
+        ros::Publisher pub_target_pcl;
         
         // Define vector used to transform livox custom msg into PointCloud2
         std::vector<livox_ros_driver::CustomMsgConstPtr> livox_data;
@@ -146,7 +146,7 @@ class DynamicScanTrackingNode
             // Publishers for poses calculated for different integration times
             pub_object_pose = nh.advertise<geometry_msgs::PoseStamped>("/dynamic_scan_tracking/object_pose", 1000);
             pub_object_velocity = nh.advertise<geometry_msgs::TwistStamped>("/dynamic_scan_tracking/object_velocity", 1000);
-            // pub_target_pcl = nh.advertise<sensor_msgs::PointCloud2>("/target_pcl", 1000); // used to visualize current livox point cloud scan
+            pub_target_pcl = nh.advertise<sensor_msgs::PointCloud2>("/target_pcl", 1000); // used to visualize current livox point cloud scan
 
             // Initialize position and drone detection to false (changed later according to parameters)
             position_initialized = false;
@@ -254,14 +254,14 @@ class DynamicScanTrackingNode
             ROS_INFO_STREAM("Initial position = " << obj_position);
         }
 
-    // void publishPointCloud(pcl::PointCloud<PointType>::Ptr& pcl_ptr, ros::Publisher& publisher)
-    // {
-    //     sensor_msgs::PointCloud2 pcl_ros_msg;
-    //     pcl::toROSMsg(*pcl_ptr.get(), pcl_ros_msg);
-    //     pcl_ros_msg.header.frame_id = "livox_frame";
-    //     pcl_ros_msg.header.stamp = ros::Time::now();
-    //     publisher.publish(pcl_ros_msg);
-    // }
+    void publishPointCloud(pcl::PointCloud<PointType>::Ptr& pcl_ptr, ros::Publisher& publisher)
+    {
+        sensor_msgs::PointCloud2 pcl_ros_msg;
+        pcl::toROSMsg(*pcl_ptr.get(), pcl_ros_msg);
+        pcl_ros_msg.header.frame_id = "livox_frame";
+        pcl_ros_msg.header.stamp = ros::Time::now();
+        publisher.publish(pcl_ros_msg);
+    }
 
     void droneDetectionCallback(const geometry_msgs::PoseStamped initial_position)
     {
@@ -290,11 +290,12 @@ class DynamicScanTrackingNode
             // Used in compute pose to define each point's weight
             unsigned long msg_timebase_ns = livox_data[0]->timebase;
 
-            // publishPointCloud(obj_cloud_ast, pub_target_pcl);
+            publishPointCloud(obj_cloud_ast, pub_target_pcl); // uncomment to visualize tracked target point cloud
 
             trackObjectAdaptiveIntegrationTime(point_cloud_ast, point_cloud_current_scan, obj_cloud_ast, deque_ast, future_position_ast,
                                             kf_ast, search_radius, msg_timebase_ns, MAX_INTEGRATION_TIME_AST, optimal_integration_time_ast,
                                             pose_vector_ast, current_pose_ast, previous_pose_ast);
+
             trackObjectAdaptiveIntegrationTime(point_cloud_adt, point_cloud_current_scan, obj_cloud_adt, deque_adt, future_position_adt,
                                             kf_adt, search_radius, msg_timebase_ns, MAX_INTEGRATION_TIME_ADT, optimal_integration_time_adt,
                                             pose_vector_adt, current_pose_adt, previous_pose_adt);
@@ -366,7 +367,7 @@ class DynamicScanTrackingNode
         int total_num_scans = (optimal_integration_time < point_cloud_deque.size()) ? optimal_integration_time : point_cloud_deque.size();
 
         // Add the points from the last max_scans point clouds to the current point cloud
-        for (int i = 0; i <= total_num_scans; i++)
+        for (int i = 0; i <= total_num_scans; ++i)
         {
             *current_cloud += point_cloud_deque[i];
         }
@@ -384,6 +385,7 @@ class DynamicScanTrackingNode
                             KalmanFilter& kalman_filter,
                             float search_radius)
     {
+
         // Initialize KDTree for searching object in point cloud
         pcl::KdTreeFLANN<PointType>::Ptr kd_tree (new pcl::KdTreeFLANN<PointType>());
         kd_tree->setInputCloud(point_cloud);
@@ -419,6 +421,7 @@ class DynamicScanTrackingNode
                 object_cloud->points.push_back(pt); 
             }
         }
+
     }
 
     void updatePosition(pcl::PointCloud<PointType>::Ptr& object_cloud, KalmanFilter& kalman_filter, unsigned long msg_timebase_ns)

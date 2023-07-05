@@ -26,6 +26,7 @@
 ##############################################################################
 
 import rospy
+import os
 
 import cv2
 import numpy as np
@@ -68,7 +69,7 @@ class LidarToImageNode:
         self.point_cloud_buffer = [None] * self.buffer_size
         self.current_index = 0
         self.counter = 0
-        self.model = yolov5.load('/home/iacopo/dynamic_scan_tracking_ws/src/model/model.pt')
+        self.model = yolov5.load(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))) + "/model/model.pt")
         self.model.conf = 0.8
         self.model.iou = 0.8
         self.model.agnostic = False
