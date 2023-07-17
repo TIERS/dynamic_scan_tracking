@@ -15,10 +15,9 @@
     <img src="doc/pipeline_diagram.png" width=99% />
   </p>
 
-  <p>
-    This is the code implementation for the paper [UAV Tracking with Solid-State Lidars: Dynamic Multi-Frequency Scan Integration](https://arxiv.org/abs/2304.12125).
-  </p>
 </div>
+
+This is the code implementation for the paper [UAV Tracking with Solid-State Lidars: Dynamic Multi-Frequency Scan Integration](https://arxiv.org/abs/2304.12125).
 
 <hr />
 
