@@ -6,6 +6,8 @@
     <a href="https://github.com/TIERS/dynamic_scan_tracking/blob/main"><img src="https://img.shields.io/badge/mac%20os-000000?&logo=apple&logoColor=white" /></a>
     <br />
     <br />
+    <a href="https://tiers.github.io/dynamic_scan_tracking/">Project Page</a>
+    <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
     <a href="https://arxiv.org/pdf/2304.12125.pdf">Paper</a>
     <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
     <a href="https://github.com/TIERS/dynamic_scan_tracking/issues">Contact Us</a>
