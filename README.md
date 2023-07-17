@@ -1,10 +1,26 @@
-# UAV Tracking with Solid-State Lidars: Dynamic Multi-Frequency Scan Integration
-
 <div align="center">
-<img src="doc/pipeline_diagram.png" width=99% />
+    <h1>UAV Tracking with Solid-State Lidars: Dynamic Multi-Frequency Scan Integration</h1>
+    <a href="https://github.com/TIERS/dynamic_scan_tracking/blob/main/LICENSE"><img src="https://img.shields.io/github/license/PRBonn/kiss-icp" /></a>
+    <a href="https://github.com/TIERS/dynamic_scan_tracking/blob/main"><img src="https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black" /></a>
+    <a href="https://github.com/TIERS/dynamic_scan_tracking/blob/main"><img src="https://img.shields.io/badge/Windows-0078D6?st&logo=windows&logoColor=white" /></a>
+    <a href="https://github.com/TIERS/dynamic_scan_tracking/blob/main"><img src="https://img.shields.io/badge/mac%20os-000000?&logo=apple&logoColor=white" /></a>
+    <br />
+    <br />
+    <a href="https://arxiv.org/pdf/2304.12125.pdf">Paper</a>
+    <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+    <a href="https://github.com/TIERS/dynamic_scan_tracking/issues">Contact Us</a>
+  <br />
+  <br />
+  <p align="center">
+    <img src="doc/pipeline_diagram.png" width=99% />
+  </p>
+
+  <p>
+    This is the code implementation for the paper [UAV Tracking with Solid-State Lidars: Dynamic Multi-Frequency Scan Integration](https://arxiv.org/abs/2304.12125).
+  </p>
 </div>
 
-This is the code implementation for the paper [UAV Tracking with Solid-State Lidars: Dynamic Multi-Frequency Scan Integration](https://arxiv.org/abs/2304.12125).
+<hr />
 
 ## Install
 The code has been tested on Ubuntu 20.04 with ROS Noetic
