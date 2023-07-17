@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>MMtrack</title>
+    <meta content="A robust single object tracker in LiDAR scenes following the motion-centric paradigm" name="description">
+    <meta content="Beyond 3D Siamese Tracking: A Motion-Centric Paradigm for 3D Single Object Tracking in Point Clouds" property="og:title">
+    <meta content="A robust single object tracker in LiDAR scenes following the motion-centric paradigm." property="og:description">
+    <meta content="http://people.eecs.berkeley.edu/~tancik/nerf/website_renders/images/nerf_graph.jpg" property="og:image">
+    <meta content="Beyond 3D Siamese Tracking: A Motion-Centric Paradigm for 3D Single Object Tracking in Point Clouds" property="twitter:title">
+    <meta content="A robust single object tracker in LiDAR scenes following the motion-centric paradigm." property="twitter:description">
+    <meta content="http://people.eecs.berkeley.edu/~tancik/nerf/website_renders/images/nerf_graph.jpg" property="twitter:image">
+    <meta property="og:type" content="website">
+    <meta content="summary_large_image" name="twitter:card">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="./assets/css/main.css" rel="stylesheet">
+</head>
+
+<body class="container-sm">
+    <div>
+        <h2 class="text-center d-block text-dark pt-5">
+            Beyond 3D Siamese Tracking: <br>A Motion-Centric Paradigm for 3D Single Object Tracking in Point Clouds
+        </h2>
+        <h4 class="text-center d-block" style="color:#ffc107">CVPR 2022 (Oral)
+        </h4>
+        <p class="text-center d-block text-dark"><a class="text-secondary" href="https://github.com/Ghostish/">Chaoda Zheng,</a> <a class="text-secondary" href="https://yanx27.github.io/">Xu Yan,</a> <a class="text-secondary" href="https://github.com/zhanghm1995">Haiming Zhang,</a> Baoyuan Wang,
+            Shenghui Cheng, Shuguang Cui, <a class="text-secondary" href="https://mypage.cuhk.edu.cn/academics/lizhen/"> Zhen Li</a></p>
+        <p class="text-center d-block text-dark">The Chinese University of Hong Kong, Shenzhen </p>
+
+        <div>
+            <div class="row gx-5 justify-content-center row-cols-2">
+                <div class="col-1 p-3 text-decoration-none mx-5">
+                    <button type="button" class="btn"><a class="d-block mx-auto" href="https://arxiv.org/abs/2203.01730"><img src="./figs/paper_icon.png" width="100%"/>
+                    </a>Paper</button>
+
+                </div>
+                <div class="col-1 p-3 text-decoration-none mx-5">
+                    <button type="button" class="btn"><a class="d-block mx-auto" href="https://github.com/Ghostish/Open3DSOT"><img src="./figs/code_icon.png" width="100%"/>
+                    </a>Code</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <video class="w-50 mx-auto d-block mb-4" controls>
+        <source src="https://github.com/Ghostish/MM-Track/raw/main/figs/video.MOV" type="video/mp4">
+      Your browser does not support the video tag.
+      </video>
+
+
+
+    <div class="bg-light container-sm p-4 w-75">
+        <h3 class="subtitle">Motivation & Method</h3>
+        <p>
+            For single object tracking in LiDAR scenes (LiDAR SOT), previous methods rely on appearance matching to localize the target using a target template.
+        </p>
+        <img src="./figs/matching_paradigm.png" class="img_fluid d-block mx-auto w-100" alt="Siamese matching paradigm" />
+        <p>
+            However, as shown in the following figure, matching-based approaches become unreliable when dealing with drastic appearance changes and distractors, which commonly exist in LiDAR scenes.
+        </p>
+        <img src="./figs/demo0.png" class="img_fluid d-block mx-auto w-100" alt="Distracted cases" />
+        <p>
+            Since the task deals with a dynamic scene across a video sequence, the target's movements among successive frames provide useful cues to distinguish distractors and handle appearance changes. We for the first time present a <b>motion-centric paradigm</b>            to handle LiDAR SOT. By explicitly learning from various "relative target motions" in data, the paradigm robustly localize the target in the current frame via motion transformation.
+        </p>
+        <img src="./figs/motion_centric_paradigm.png" class="img_fluid d-block mx-auto w-100" alt="Motion-Centric paradigm" />
+        <p>
+            Based on the motion-centric paradigm, a two-stage tracker M^2-Track is proposed. At 1 st-stage, M^2-Track localizes the target within successive frames via motion transformation. Then it refines the target box through motion-assisted shape completion
+            at 2nd-stage. M^2-Track significantly outperforms the previous SOTAs and further shows its potential when simply integrated with appearance-matching.
+        </p>
+        <img src="./figs/arch.png" class="img_fluid d-block mx-auto w-100" alt="M^2-Track Architecture" />
+    </div>
+
+    <div class="container-sm p-4 w-75">
+        <h3 class="subtitle">Distractor Statistics</h3>
+        <p> Distributions of distractors for car/vehicle objects on different datasets:
+        </p>
+        <div class="row mx-auto">
+            <img src="./figs/distractor_statistics.png" class=" d-block mx-auto" alt="distractor statistics" />
+        </div>
+        <p>Visualization:</p>
+        <div class="row mx-auto">
+            <img src="./figs/distractors_vis.png" class=" d-block mx-auto" alt="distractor statistics" />
+        </div>
+        <p>NuScenes and Waymo are more challenging for matching-based approaches due to widespread distractors in scenes. But M^2-Track robustly handles distractors via explicit motion modeling.</p>
+
+    </div>
+
+    <div class="container-sm p-4 w-75">
+        <h3 class="subtitle">Quantitative Results</h3>
+        <h6 class="text-black p-1">NuScenes & Waymo</h6>
+        <div class="row mx-auto">
+            <img src="./figs/results_nusc_waymo.png" class=" d-block mx-auto" alt="results on nuscenes and waymo" />
+        </div>
+        <h6 class="text-black p-3">Comparison & Behavior Analysis in KITTI </h6>
+        <div class="row mx-auto justify-content-center">
+            <img src="./figs/results_kitti.png" class="d-block col-6" alt="results on KITTI" />
+            <div class="col-6">
+                <img src="./figs/distractors.png" class="d-block w-100" alt="robustness to distractors" />
+                <img src="./figs/with_appearance_matching.png" class="d-block w-100 my-auto" alt="robustness to distractors" />
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="container-sm p-4 w-75">
+        <h3 class="subtitle">Qualitative Results</h3>
+        <h6 class="text-black p-1">Tracking on Cars</h6>
+
+        <img src="./figs/vis2.png" class="img-fluid d-block mx-auto" alt="results on nuscenes and waymo" />
+        <h6 class="text-black p-1">Tracking on Pedestrian</h6>
+        <img src="./figs/vis3.png" class="img-fluid d-block mx-auto" alt="results on nuscenes and waymo" />
+    </div>
+    <div class="container-sm bg-light p-4 w-75">
+        <h3 class="subtitle">Citation</h3>
+        <pre><code>
+            @article{zheng2022beyond,
+                title={Beyond 3D Siamese Tracking: A Motion-Centric Paradigm for 3D Single Object Tracking in Point Clouds},
+                author={Zheng, Chaoda and Yan, Xu and Zhang, Haiming and Wang, Baoyuan and Cheng, Shenghui and Cui, Shuguang and Li, Zhen},
+                journal={arXiv preprint arXiv:2203.01730},
+                year={2022}
+              }
+        </code></pre>
+    </div>
+
+</body>
+
+</html>
