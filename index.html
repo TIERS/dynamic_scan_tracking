@@ -125,16 +125,17 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          <p>
-            With the increasing use of drones across various industries, the navigation and tracking of these unmanned aerial vehicles (UAVs) in challenging environments, namely GNSS-denied environments, have become critical issues.
-            In this paper, we propose a novel method for a ground-based UAV tracking system using a solid-state LiDAR, which dynamically adjusts the LiDAR frame integration time based on the distance to the UAV and its speed.
-            Our method fuses two simultaneous scan integration frequencies for high accuracy and persistent tracking, enabling reliable state estimation of the UAV even in challenging scenarios.
-            The application of the Inverse Covariance Intersection method and Kalman filters allows for better tracking accuracy and can handle challenging tracking scenarios.
-            Compared to previous works in solid-state lidar tracking, this paper presents a more complete and robust solution.
-            <br>
-            We have performed a number of experiments to evaluate the performance of the proposed tracking system and identify its limitations.
-            Our experimental results demonstrate that the proposed method clearly outperforms the baseline method and ensures tracking is more robust across different types of trajectories.  
-          </p>
+            <p style="margin-bottom: 0.5em">
+                With the increasing use of drones across various industries, the navigation and tracking of these unmanned aerial vehicles (UAVs) in challenging environments, namely GNSS-denied environments, have become critical issues.
+                In this paper, we propose a novel method for a ground-based UAV tracking system using a solid-state LiDAR, which dynamically adjusts the LiDAR frame integration time based on the distance to the UAV and its speed.
+                Our method fuses two simultaneous scan integration frequencies for high accuracy and persistent tracking, enabling reliable state estimation of the UAV even in challenging scenarios.
+                The application of the Inverse Covariance Intersection method and Kalman filters allows for better tracking accuracy and can handle challenging tracking scenarios.
+                Compared to previous works in solid-state lidar tracking, this paper presents a more complete and robust solution.
+            </p>
+            <p style="margin-bottom: 0.5em">
+                We have performed a number of experiments to evaluate the performance of the proposed tracking system and identify its limitations.
+                Our experimental results demonstrate that the proposed method clearly outperforms the baseline method and ensures tracking is more robust across different types of trajectories.  
+            </p>
         </div>
       </div>
     </div>
@@ -148,38 +149,38 @@
 <section class="hero is-small">
     <div class="container is-max-desktop">
         <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-            <h2 class="title is-3">Methodology</h2>
-            <div class="content has-text-justified">
-            <div class="item">
-                <!-- Your image here --> 
-                <img src="static/images/pipeline_diagram.png" alt="Pipeline Diagram"/>          
-            </div>
-            <p>
-                We propose two simultaneous tracking estimators on two different scan frequencies running in parallel where the integration time, defining the number of scans to accumulate, is dynamically adjusted
-                to optimize the point cloud density:
-                <ol type="i">
-                    <li>Adaptive Sparse Tracking (AST): Sparse point clouds are integrated up to 5 consecutive scans. This process provides high accuracy for estimating the UAV position and speed,
-                        but only tracks it through a reduced number of points and not necessarily in all frames.
-                    </li>
-                    <li>Adaptive Dense Tracking (ADT): The number of scans ranges between 10 and 50. The extracted point cloud representing the UAV is distorted by motion,
-                        which reduces the accuracy of localization and speed estimation, but the tracking is more robust and persistent as the UAV can be recognized in most frames.
-                    </li>
-                </ol>
-                Our main contributions with respect to our previous work are in both data processing (real-time adaptive dynamic integration) and a tracking algorithm:
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Methodology</h2>
+                <div class="content has-text-justified">
+                    <div class="item">
+                        <!-- Your image here --> 
+                        <img src="static/images/pipeline_diagram.png" alt="Pipeline Diagram"/>          
+                    </div>
+                    <p>
+                        We propose two simultaneous tracking estimators on two different scan frequencies running in parallel where the integration time, defining the number of scans to accumulate, is dynamically adjusted
+                        to optimize the point cloud density:
+                        <ol type="i">
+                            <li>Adaptive Sparse Tracking (AST): Sparse point clouds are integrated up to 5 consecutive scans. This process provides high accuracy for estimating the UAV position and speed,
+                                but only tracks it through a reduced number of points and not necessarily in all frames.
+                            </li>
+                            <li>Adaptive Dense Tracking (ADT): The number of scans ranges between 10 and 50. The extracted point cloud representing the UAV is distorted by motion,
+                                which reduces the accuracy of localization and speed estimation, but the tracking is more robust and persistent as the UAV can be recognized in most frames.
+                            </li>
+                        </ol>
+                        Our main contributions with respect to our previous work are in both data processing (real-time adaptive dynamic integration) and a tracking algorithm:
 
-                <ol type="i">
-                    <li>an algorithm that adjusts the LiDAR frame integration time, or frequency, dynamically based on the UAV speed and distance from the sensor.
-                        We integrate consecutive scans in a sliding window manner to retain the most recent information about the state of the UAV.
-                    </li>
-                    <li>a novel dual tracking approach using a Kalman filter variant that combines the two scan integration frequencies into one single state estimation using inverse covariance intersection.
-                        We evaluate the tracking performance during the experiments with ground truth data generated by a motion capture system.
-                    </li>
-                </ol>
-                Moreover, we provide a method to detect the initial position of the UAV using the object detection algorithm YOLOV5 over range images generated from a solid-state LiDAR point cloud.
-            </p>
+                        <ol type="i">
+                            <li>an algorithm that adjusts the LiDAR frame integration time, or frequency, dynamically based on the UAV speed and distance from the sensor.
+                                We integrate consecutive scans in a sliding window manner to retain the most recent information about the state of the UAV.
+                            </li>
+                            <li>a novel dual tracking approach using a Kalman filter variant that combines the two scan integration frequencies into one single state estimation using inverse covariance intersection.
+                                We evaluate the tracking performance during the experiments with ground truth data generated by a motion capture system.
+                            </li>
+                        </ol>
+                        Moreover, we provide a method to detect the initial position of the UAV using the object detection algorithm YOLOV5 over range images generated from a solid-state LiDAR point cloud.
+                    </p>
+                </div>
             </div>
-        </div>
         </div>
     </div>
 </section>
@@ -187,35 +188,62 @@
 
 <br>
 
-<!-- Quantitative Results -->
+<!-- Initialization -->
 <section class="hero is-light">
     <div class="hero-body">
         <div class="container is-max-desktop">
             <div class="columns is-centered has-text-centered">
                 <div class="column is-four-fifths">
-                    <h2 class="title is-3">Quantitative Results</h2>
+                    <h2 class="title is-3">Initialization</h2>
                 </div>
             </div>            
             <div id="results-carousel" class="carousel results-carousel">
                 <div class="item">
                     <!-- Your image here -->
-                    <img src="static/images/table_rmse.png" alt="RMSE Results"/>
+                    <img src="static/images/sky_filtered.jpg" alt="Range Image with sky filtered"/>
                     <h2 class="subtitle has-text-centered">
-                    Position error (RMSE) for both constant and adaptive integration methods (N/A when the error diverges because the estimated trajectory is incomplete. Unit: meter)
+                    Range image reconstructed from point cloud with filtered sky
                     </h2>
                 </div>
                 <div class="item">
                     <!-- Your image here -->
-                    <img src="static/images/table_weights.png" alt="RMSE Weight function"/>
+                    <img src="static/images/sky_unfiltered.jpg" alt="Range Image with sky unfiltered"/>
                     <h2 class="subtitle has-text-centered">
-                    Position error (RMSE) for our adaptive integration methods for different types of weight functions (N/A when the error diverges because the estimated trajectory is incomplete. Unit: meter)
+                        Range image reconstructed from point cloud with unfiltered sky
                     </h2>
                 </div>
             </div>
+            <p style="margin-bottom: 0.5em">
+                To detect the target's starting location in outdoor scenarios, we use a custom YOLOv5 model trained on panoramic signal images generated by an Ouster LiDAR.
+                We generate our own range images using a combination of depth and intensity values from a solid-state LiDAR point cloud.
+
+            </p>
+            <p style="margin-bottom: 0.5em">
+
+                Using only intensity or distance to detect drones from the background becomes challenging for the YOLO model due to the proximity to ground and walls as well as the reflectivity of both the background 
+                and the drone being similar.
+
+            <p style="margin-bottom: 0.5em">
+            </p>
+                To minimize noise and artifacts when creating a single image, we first integrate a total of 30 frames. Later, the 3D point cloud is projected onto a 2D plane, taking into account both the field of view and
+                image resolution. Normalization is applied to ensure appropriate contrast in the resulting image.
+                
+            <p style="margin-bottom: 0.5em">
+            </p>
+                Upon obtaining the preliminary 2D image, its quality is enhanced through filtering and interpolation: we first identify areas with zero values and substitute them with constants to prevent
+                visual discontinuities, then, we use binary thresholding and a nearest-neighbor interpolation to fill in missing or noisy regions, which results in smoother and more accurate images.
+
+            <p style="margin-bottom: 0.5em">
+            </p>
+                There are two distinct cases that lead to zero-valued pixels after point cloud projection: the sky and other background regions where the emitted laser fails to reflect, and
+                areas within the environment where objects might be present but the LiDAR does not scan. Differentiating between these two cases is crucial for the task of image completion, as it allows for an accurate understanding
+                of the context surrounding the missing pixels. Here we use average filtering to distinguish the environment of the sky and the objects that the LiDAR fails to scan, we change the value of the sky to 255 (white),
+                so that we can filter it out and complete the pixels with a value of 0.
+            </p>
         </div>
     </div>
 </section>
-<!-- End Quantitative Results-->
+<!-- End Initialization-->
 
 <br>
 
@@ -304,6 +332,39 @@
     </div>
 </section>
 <!-- End Dataset-->
+
+<br>
+
+<!-- Quantitative Results -->
+<section class="hero is-light">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Quantitative Results</h2>
+                </div>
+            </div>            
+            <div id="results-carousel" class="carousel results-carousel">
+                <div class="item">
+                    <!-- Your image here -->
+                    <img src="static/images/table_rmse.png" alt="RMSE Results"/>
+                    <h2 class="subtitle has-text-centered">
+                    Position error (RMSE) for both constant and adaptive integration methods (N/A when the error diverges because the estimated trajectory is incomplete. Unit: meter)
+                    </h2>
+                </div>
+                <div class="item">
+                    <!-- Your image here -->
+                    <img src="static/images/table_weights.png" alt="RMSE Weight function"/>
+                    <h2 class="subtitle has-text-centered">
+                    Position error (RMSE) for our adaptive integration methods for different types of weight functions (N/A when the error diverges because the estimated trajectory is incomplete. Unit: meter)
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Quantitative Results-->
+
 
 <!--BibTex citation -->
 <section class="section" id="BibTeX">
