@@ -37,6 +37,9 @@
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
         <link rel="stylesheet" href="static/css/index.css">
 
+        <script src="https://cdn.plot.ly/plotly-2.24.1.min.js" charset="utf-8"></script><!-- Load plotly.js into the DOM -->
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
         <script defer src="static/js/fontawesome.all.min.js"></script>
@@ -252,70 +255,62 @@
                     <div id="results-carousel" class="carousel results-carousel">
                         <div class="item">
                             <!-- Your image here -->
-                            <img src="static/images/track1.png" alt="Trajectory 1"/>
+                            <!-- <img src="static/images/track1.png" alt="Trajectory 1"/> -->
+                            <div id='track_1'></div>
                             <h2 class="subtitle has-text-centered">
                                 Estimated trajectory T1
                             </h2>
                         </div>
                         <div class="item">
-                            <!-- Your image here -->
-                            <img src="static/images/track2.png" alt="Trajectory 2"/>
+                            <div id='track_2'></div>
                             <h2 class="subtitle has-text-centered">
                                 Estimated trajectory T2
                             </h2>
                         </div>
                         <div class="item">
-                            <!-- Your image here -->
-                            <img src="static/images/track3.png" alt="Trajectory 3"/>
+                            <div id='track_3'></div>
                             <h2 class="subtitle has-text-centered">
                                 Estimated trajectory T3
                             </h2>
                         </div>
                         <div class="item">
-                            <!-- Your image here -->
-                            <img src="static/images/track4.png" alt="Trajectory 4"/>
+                            <div id='track_4'></div>
                             <h2 class="subtitle has-text-centered">
                                 Estimated trajectory T4
                             </h2>
                         </div>
                         <div class="item">
-                            <!-- Your image here -->
-                            <img src="static/images/track5.png" alt="Trajectory 5"/>
+                            <div id='track_5'></div>
                             <h2 class="subtitle has-text-centered">
                                 Estimated trajectory T5
                             </h2>
                         </div>
                         <div class="item">
-                            <!-- Your image here -->
-                            <img src="static/images/track6.png" alt="Trajectory 6"/>
+                            <div id='track_6'></div>
                             <h2 class="subtitle has-text-centered">
                                 Estimated trajectory T6
                             </h2>
                         </div>
                         <div class="item">
-                            <!-- Your image here -->
-                            <img src="static/images/track7.png" alt="Trajectory 7"/>
+                            <div id='track_7'></div>
                             <h2 class="subtitle has-text-centered">
                                 Estimated trajectory T7
                             </h2>
                         </div>
                         <div class="item">
-                            <!-- Your image here -->
-                            <img src="static/images/track8.png" alt="Trajectory 8"/>
+                            <div id='track_8'></div>
                             <h2 class="subtitle has-text-centered">
                                 Estimated trajectory T8
                             </h2>
                         </div>
                         <div class="item">
-                            <!-- Your image here -->
-                            <img src="static/images/track9.png" alt="Trajectory 9"/>
+                            <div id='track_9'></div>
                             <h2 class="subtitle has-text-centered">
                                 Estimated trajectory T9
                             </h2>
                         </div>
                         <div class="item">
-                            <!-- Your image here -->
-                            <img src="static/images/track10.png" alt="Trajectory 10"/>
+                            <div id='track_10'></div>
                             <h2 class="subtitle has-text-centered">
                                 Estimated trajectory T10
                             </h2>
@@ -397,6 +392,6 @@
         <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
 
             <!-- End of Statcounter Code -->
-
+        <script src="static/js/dataset.js"></script>
     </body>
 </html>
