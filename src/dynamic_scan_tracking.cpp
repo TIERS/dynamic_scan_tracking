@@ -69,14 +69,12 @@ class DynamicScanTrackingNode
         // Define current and previous pose (previous pose used to compute velocity and orientation)
         geometry_msgs::PoseStamped current_pose_ast;
         geometry_msgs::PoseStamped current_pose_adt;
-        geometry_msgs::PoseStamped current_pose_ground_truth;
         geometry_msgs::PoseStamped final_pose; // Final pose intersecrtion AST and ADT
 
         geometry_msgs::TwistStamped final_velocity;
 
         geometry_msgs::PoseStamped previous_pose_ast;
         geometry_msgs::PoseStamped previous_pose_adt;
-        geometry_msgs::PoseStamped previous_pose_ground_truth;
         geometry_msgs::PoseStamped previous_pose_final; // final intersected value
 
         // Define delta t used in the motion velocity model
@@ -403,8 +401,8 @@ class DynamicScanTrackingNode
 
         // Calculate predicted position using kalman filter
         // Use future position in KDTree to find object in point cloud
-        // kalman_filter.predictEKF(delta_t_pose);
-        kalman_filter.predict(delta_t_pose); // Linear Kalman filter prediction
+        kalman_filter.predictEKF(delta_t_pose); // Extended Kalman filter prediction
+        // kalman_filter.predict(delta_t_pose); // Linear Kalman filter prediction
         future_position.x = kalman_filter.x_[0];
         future_position.y = kalman_filter.x_[1];
         future_position.z = kalman_filter.x_[2];
