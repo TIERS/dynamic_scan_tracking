@@ -1,3 +1,6 @@
+## **Note**: A new real-time implementation of the code is available at [https://github.com/IacopomC/dynamic_scan_tracking](https://github.com/IacopomC/dynamic_scan_tracking)
+
+
 <div align="center">
     <h1>UAV Tracking with Solid-State Lidars: Dynamic Multi-Frequency Scan Integration</h1>
     <a href="https://github.com/TIERS/dynamic_scan_tracking/blob/main/LICENSE"><img src="https://img.shields.io/github/license/PRBonn/kiss-icp" /></a>
